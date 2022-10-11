@@ -45,6 +45,7 @@ def automata(language):
 
 @app.route('/automata/<language>/<wordEvaluated>/<Time>')
 def EvaluateWord(wordEvaluated,language,Time):
+    stop=False
     wordAccepted=False
     numberOfState=0
     Steps=[]
@@ -59,11 +60,12 @@ def EvaluateWord(wordEvaluated,language,Time):
                 Steps.append("Q3")
                 numberOfState=3
             elif(wordEvaluated[index]=='d'):
+                stop=True
                 wordAccepted=True
-                Steps.append("Q4")
                 Steps.append("Q0")
+                Steps.append("Q4")
                 numberOfState=4
-            elif(wordEvaluated[index]==' '):
+            elif(wordEvaluated[index]=='|'):
                 Steps.append("Q0")
                 wordAccepted=True
             else:
@@ -87,6 +89,7 @@ def EvaluateWord(wordEvaluated,language,Time):
                 Steps.append("Q3")
                 numberOfState=3
             elif(wordEvaluated[index]=='d'):
+                stop=True
                 Steps.append("Q4")
                 numberOfState=4
             else:
@@ -108,9 +111,13 @@ def EvaluateWord(wordEvaluated,language,Time):
                 Steps.append("Q4")
                 numberOfState=4
             elif(wordEvaluated[index]=='c'):
-                Steps.append("Q3")
-                wordAccepted=False
-                numberOfState=3
+                if(stop==True):
+                    wordAccepted=False
+                    break
+                else:
+                    Steps.append("Q3")
+                    wordAccepted=False
+                    numberOfState=3
             else:
                 wordAccepted=False
                 break
