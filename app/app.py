@@ -135,6 +135,6 @@ def EvaluateWord(wordEvaluated,language,Time):
 
 
 if __name__=='__main__':
-    app.run(debug=True)
+    app.run(debug=False)
 
 
