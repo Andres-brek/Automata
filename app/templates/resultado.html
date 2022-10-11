@@ -1,0 +1,54 @@
+{%extends './layout.html'%}
+
+{%block title%}{{Resultado}}{%endblock%}
+
+{%block body%}
+
+{%if data.Resultado%}
+    <h1>Palabra aceptada</h1>
+{%else%}
+    <h1>Palabra no aceptada</h1>
+{%endif%}
+<form action="/Español">
+    <input type="submit" value="{{data.Back}}">
+</form>
+<div class="Automaton">
+    <div class="canvas">
+        <div id="Q0"></div>
+        <div id="Q1"></div>
+        <div id="Q2"></div>
+        <div id="Q3"></div>
+        <div id="Q4"></div>
+    </div>
+</div>
+<script  type="text/javascript">
+
+    let Steps=[];
+    {%for c in data.Steps%}
+    {%if c=="Q0"%}
+    Steps.push("Q0");
+    {%elif c=="Q1"%}
+    Steps.push("Q1");
+    {%elif c=="Q2"%}
+    Steps.push("Q2");
+    {%elif c=="Q3"%}
+    Steps.push("Q3");
+    {%elif c=="Q4"%}
+    Steps.push("Q4");
+    {%endif%}
+    {%endfor%}
+
+    ChangeColor(Steps,{{data.Time}});
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    async function ChangeColor(Steps,Time){
+        for(var i=0;i<Steps.length;i++){
+            console.log(Steps[i]);
+            var prueba=document.getElementById(Steps[i]);
+            prueba.style.borderColor="Red";
+            await sleep(Time);
+            prueba.style.borderColor="Black";}
+        }
+</script>
+{%endblock%}

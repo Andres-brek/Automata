@@ -1,0 +1,88 @@
+*{
+    font-family: 'Kanit', sans-serif;
+}
+
+body{
+    background: peru;
+}
+
+.nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Idioms{
+    display: flex;
+}
+
+form{
+    display: flex;
+    align-items: center;
+}
+
+.canvas{
+    margin: auto;
+    height: 600px;
+    width: 1200px;
+    background: url(Automaton.png);
+    background-size: cover;
+}
+
+#Q0{
+    position: relative;
+    height: 135px;
+    width: 135px;
+    border: solid;
+    border-color: black;
+    border-radius: 70px;
+    top: 234px;
+    left: 205px;
+}
+
+#Q1{
+    position: relative;
+    height: 135px;
+    width: 135px;
+    border: solid;
+    border-color: black;
+    border-radius: 70px;
+    top: -76px;
+    left: 345px;
+}
+
+
+#Q2{
+    position: relative;
+    height: 135px;
+    width: 135px;
+    border: solid;
+    border-color: black;
+    border-radius: 70px;
+    top: -215px;
+    left: 644px;
+}
+
+
+#Q3{
+    position: relative;
+    height: 135px;
+    width: 135px;
+    border: solid;
+    border-color: black;
+    border-radius: 70px;
+    top: -185px;
+    left: 857px;
+}
+
+
+#Q4{
+    position: relative;
+    height: 135px;
+    width: 135px;
+    border: solid;
+    border-color: black;
+    border-radius: 70px;
+    top: -155px;
+    left: 644px;
+}

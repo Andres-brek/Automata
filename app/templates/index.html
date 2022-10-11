@@ -1,0 +1,11 @@
+{%extends './layout.html'%}
+
+{%block title%}{{data.titulo}}{%endblock%}
+
+{%block body%}
+{%for b in data.Boton%}
+<form action="automata/{{b}}" method="post">
+    <input type="submit" value="{{b}}">
+</form>
+{%endfor%}
+{%endblock%}

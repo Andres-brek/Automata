@@ -1,0 +1,33 @@
+{%extends './layout.html'%}
+
+{%block title%}{{data.Pagetitle}}{%endblock%}
+
+{%block body%}
+<div class="nav">
+    <h1>{{data.Maintitle}}</h1>
+    <div class="Idioms">
+        {%for b in data.Idioms%}
+        <form action="/{{b}}" method="post">
+            <input type="submit" value="{{b}}">
+        </form>
+        {%endfor%}
+    </div>
+</div>
+<div class="Input">
+        <form method="POST">
+            <dd>{{form.Time}}</dd>
+            <p>{{data.Time}}</p>
+            <dd>{{form.Word}}</dd>
+            <input type="submit" value="{{data.Button}}">
+        </form>
+</div>
+<div class="Automaton">
+    <div class="canvas">
+        <div id="Q0"></div>
+        <div id="Q1"></div>
+        <div id="Q2"></div>
+        <div id="Q3"></div>
+        <div id="Q4"></div>
+    </div>
+</div>
+{%endblock%}
