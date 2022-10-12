@@ -45,80 +45,35 @@ def automata(language):
 
 @app.route('/automata/<language>/<wordEvaluated>/<Time>')
 def EvaluateWord(wordEvaluated,language,Time):
+    wordEvaluated=wordEvaluated.lower()
     stop=False
     wordAccepted=False
     numberOfState=0
-    Steps=[]
+    Steps=["Q0"]
     for index in range(0,len(wordEvaluated)):
-        if(numberOfState==0):
-            if(wordEvaluated[index]=='b'):
-                Steps.append("Q0")
-                Steps.append("Q1")
-                numberOfState=1
-            elif(wordEvaluated[index]=='c'):
-                Steps.append("Q0")
-                Steps.append("Q3")
-                numberOfState=3
-            elif(wordEvaluated[index]=='d'):
+        if(numberOfState==-1):
+            wordAccepted=False
+            break
+        elif(numberOfState==0):
+            numberOfState,wordAccepted=State0(wordEvaluated[index])
+            Steps.append(addStep(numberOfState))
+            if(numberOfState==4):
                 stop=True
-                wordAccepted=True
-                Steps.append("Q0")
-                Steps.append("Q4")
-                numberOfState=4
-            elif(wordEvaluated[index]=='|'):
-                Steps.append("Q0")
-                wordAccepted=True
-            else:
-                wordAccepted=False
-                break
         elif(numberOfState==1):
-            if(wordEvaluated[index]=='a'):
-                Steps.append("Q2")
-                numberOfState=2
-                wordAccepted=True
-            else:
-                wordAccepted=False
-                break
+            numberOfState,wordAccepted=State1(wordEvaluated[index])
+            Steps.append(addStep(numberOfState))
         elif(numberOfState==2):
-            if(wordEvaluated[index]=='b'):
-                wordAccepted=False
-                Steps.append("Q1")
-                numberOfState=1
-            elif(wordEvaluated[index]=='c'):
-                wordAccepted=False
-                Steps.append("Q3")
-                numberOfState=3
-            elif(wordEvaluated[index]=='d'):
+            numberOfState,wordAccepted=State2(wordEvaluated[index])
+            Steps.append(addStep(numberOfState))
+            if(numberOfState==4):
                 stop=True
-                Steps.append("Q4")
-                numberOfState=4
-            else:
-                wordAccepted=False
-                break
         elif(numberOfState==3):
-            if(wordEvaluated[index]=='d'):
-                wordAccepted=True
-                Steps.append("Q4")
-                numberOfState=4
-            elif(wordEvaluated[index]=='c'):
-                Steps.append("Q3")
-                numberOfState=3
-            else:
-                wordAccepted=False
-                break
+            numberOfState,wordAccepted=State3(wordEvaluated[index])
+            Steps.append(addStep(numberOfState))
         elif(numberOfState==4):
-            if(wordEvaluated[index]=='d'):
-                Steps.append("Q4")
-                numberOfState=4
-            elif(wordEvaluated[index]=='c'):
-                if(stop==True):
-                    wordAccepted=False
-                    break
-                else:
-                    Steps.append("Q3")
-                    wordAccepted=False
-                    numberOfState=3
-            else:
+            numberOfState,wordAccepted=State4(wordEvaluated[index])
+            Steps.append(addStep(numberOfState))
+            if(stop==True and numberOfState!=4):
                 wordAccepted=False
                 break
     if(language=="Español"):
@@ -126,7 +81,9 @@ def EvaluateWord(wordEvaluated,language,Time):
             'Resultado':wordAccepted,
             'Steps':Steps,
             'Time':Time,
-            'Back':'Volver'
+            'Back':'Volver',
+            'WordAccepted':'Palabra aceptada',
+            'WordNoAccepted':'Palabra rechazada'
         }
     
     elif(language=="Ingles"):
@@ -134,11 +91,76 @@ def EvaluateWord(wordEvaluated,language,Time):
             'Resultado':wordAccepted,
             'Steps':Steps,
             'Time':Time,
-            'Back':'Back'
+            'Back':'Back',
+            'WordAccepted':'Word accepted',
+            'WordNoAccepted':'Word rejected'
         }
     
     return render_template('resultado.html',data=data)
  
+
+def State0(wordEvaluated):
+        if(wordEvaluated=='b'):
+                return 1,False
+        elif(wordEvaluated=='c'):
+                return 3,False
+        elif(wordEvaluated=='d'):
+                return 4,True
+        elif(wordEvaluated=='|'):
+                return 0,True
+        else:
+                return -1,False
+    
+    
+def State1(wordEvaluated):
+    if(wordEvaluated=='a'):
+        return 2,True 
+    else:
+        return -1,False
+    
+    
+def State2(wordEvaluated):
+    if(wordEvaluated=='b'):
+        return 1,False
+    elif(wordEvaluated=='c'):
+        return 3,False
+    elif(wordEvaluated=='d'):
+        return 4,True
+    else:
+        return -1,False
+    
+    
+def State3(wordEvaluated):
+    if(wordEvaluated=='d'):
+        return 4,True
+    elif(wordEvaluated=='c'):
+        return 3,False
+    else:
+        return -1,False
+    
+    
+    
+def State4(wordEvaluated):
+    if(wordEvaluated=='d'):
+        return 4,True
+    elif(wordEvaluated=='c'):
+        return 3,False
+    else:
+        return -1,False
+
+
+
+def addStep(numberOfState):
+    if(numberOfState==1):
+        return "Q1"
+    elif(numberOfState==2):
+        return "Q2"
+    elif(numberOfState==3):
+        return "Q3"
+    elif(numberOfState==4):
+        return "Q4"
+
+
 
 
 if __name__=='__main__':

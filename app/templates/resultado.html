@@ -5,9 +5,9 @@
 {%block body%}
 
 {%if data.Resultado%}
-    <h1>Palabra aceptada</h1>
+    <h1>{{data.WordAccepted}}</h1>
 {%else%}
-    <h1>Palabra no aceptada</h1>
+    <h1>{{data.WordNoAccepted}}</h1>
 {%endif%}
 <form action="/Español">
     <input type="submit" value="{{data.Back}}">
